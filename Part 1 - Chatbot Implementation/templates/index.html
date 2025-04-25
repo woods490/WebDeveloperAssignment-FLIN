@@ -809,6 +809,7 @@
                 if (event.target.classList.contains("language-option")) {
                     const buttonText = event.target.textContent.trim(); 
                     const openingMessage = document.querySelector("#opening-message");
+                    const toggleLanguage = document.querySelector('#toggle-language');
 
                     if (buttonText === "English") {
                         fetch("http://127.0.0.1:5000/static/flin_faq.json")
@@ -820,19 +821,12 @@
                             openingMessage.appendChild(document.createElement("br"));
                             openingMessage.innerHTML += newTextAfterBr;
 
-                            const englishData = data.language.English;
+                            englishData = data.language.English;
                             const topics = englishData.topics;
                             const predefinedOptionsContainer = document.querySelector('.predefined-options');
-                            for (const topic in topics) {
-                                if (topics.hasOwnProperty(topic)) {
-                                    const button = document.createElement('button');
-                                    button.classList.add('predefined-option');
-                                    button.textContent = topic;
-                                    predefinedOptionsContainer.appendChild(button);
-                                }
-                            }
 
-                            // Log for debugging
+                            iterateTopics(topics, predefinedOptionsContainer);
+
                             console.log(topics);
                         })
                         .catch(error => console.error("Error loading JSON:", error));
@@ -850,17 +844,11 @@
                             openingMessage.appendChild(br);
                             openingMessage.innerHTML += newTextAfterBr;
 
-                            const indoData = data.language.BahasaIndonesia;
+                            indoData = data.language.BahasaIndonesia;
                             const topics = indoData.topics;
                             const predefinedOptionsContainer = document.querySelector('.predefined-options');
-                            for (const topic in topics) {
-                                if (topics.hasOwnProperty(topic)) {
-                                    const button = document.createElement('button');
-                                    button.classList.add('predefined-option');
-                                    button.textContent = topic;
-                                    predefinedOptionsContainer.appendChild(button);
-                                }
-                            }
+
+                            iterateTopics(topics, predefinedOptionsContainer);
 
                             // Log for debugging
                             console.log(topics);
@@ -895,11 +883,100 @@
                 chatList.appendChild(li);
             }
 
-            function clearMsg() {
-                const chatContainer = document.querySelector(".predefined-options");
-                const outgoingMessages = chatContainer.querySelectorAll(".predefined-option");
+            function createAsstMsg(message, opening) {
+                const chatList = document.querySelector("#toggle-language");
+                const li = document.createElement("li");
+                li.classList.add("incoming", "msg");
+                const span = document.createElement("span");
+                span.classList.add("assistant-avatar");
+                const i = document.createElement("i");
+                i.classList.add("fa", "fa-grav");
+                span.appendChild(i);
+                const p = document.createElement("p");
 
-                outgoingMessages.forEach(msg => msg.remove());
+                if (opening) {
+                    p.id = "opening-message";
+                }
+
+                p.textContent = message;
+                li.appendChild(span);
+                li.appendChild(p);
+                chatList.appendChild(li);
+            }
+
+            function clearMsg() {
+                const outgoingMessageContainer = document.querySelectorAll(".outgoing.msg");
+                const incomingMessageContainer = document.querySelectorAll(".incoming.msg");
+                outgoingMessageContainer.forEach(msg => msg.remove());
+                incomingMessageContainer.forEach(outgoingMsg => outgoingMsg.remove());
+                
+                createAsstMsg('', true);
+                createPredefined();
+            }
+
+            function createPredefined(topics = null) {
+                const newLi = document.createElement("li");
+                newLi.className = "outgoing msg";
+
+                const predefinedDiv = document.createElement("div");
+                predefinedDiv.className = "predefined-options";
+
+                newLi.appendChild(predefinedDiv);
+
+                const chatContainer = document.querySelector("#toggle-language");
+                chatContainer.appendChild(newLi);
+
+                iterateTopics(topics, predefinedDiv);
+            }
+
+            function iterateTopics(topics, predefinedOptionsContainer) {
+                for (const topic in topics) {
+                    if (topics.hasOwnProperty(topic)) {
+                        const button = document.createElement('button');
+                        button.classList.add('predefined-option');
+                        button.textContent = topic;
+
+                        button.addEventListener("click", function () {
+                            showQuestions(topic, showAnswers, topics, predefinedOptionsContainer);
+                        });
+
+                        predefinedOptionsContainer.appendChild(button);
+                    }
+                }
+            }
+
+            function showAnswers(selectedQuestion, topics = null) {
+                console.log("Selected question:", selectedQuestion);
+                
+                createAsstMsg(questions[selectedQuestion].answer, false);
+                createPredefined(topics);
+            }
+
+            function showQuestions(selectedTopic, onQuestionSelected, topics, predefinedOptionsContainer) {
+                predefinedOptionsContainer.innerHTML = '';
+
+                const topicData = topics[selectedTopic];
+                questions = topicData.questions;
+
+                for (const questionText in questions) {
+                    if (questions.hasOwnProperty(questionText)) {
+                        const questionButton = document.createElement('button');
+                        questionButton.classList.add('predefined-option');
+                        questionButton.textContent = questionText;
+
+                        questionButton.addEventListener('click', () => {
+                            predefinedOptionsContainer.innerHTML = '';
+
+                            createUsrMsg(questionText);
+
+                            if (typeof onQuestionSelected === 'function') {
+                                onQuestionSelected(questionText, topics);
+                            }
+                        });
+
+                        predefinedOptionsContainer.appendChild(questionButton);
+                    }
+                }
             }
         });
     </script>
