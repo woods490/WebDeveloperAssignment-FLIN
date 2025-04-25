@@ -1,0 +1,52 @@
+{
+  "language": {
+    "English": {
+      "topics": {
+        "About FLIN": {
+          "questions": {
+            "Is FLIN safe and trustworthy?": {
+              "answer": "Yes, the Dana Talangan Program is safe. FLIN partners with trusted financial institutions that are registered with and supervised by the Financial Services Authority (OJK) in Indonesia, ensuring a secure and transparent process."
+            },
+            "What is FLIN?": {
+              "answer": "FLIN is a new platform that offers debt management solutions, specifically consolidation, restructuring, and debt repayment funding through the Dana Talangan. Through this platform, we aim to help borrowers facing difficulties in repaying their loans or trapped in debt, so they can regain control of their financial situation."
+            }
+          }
+        },
+        "Dana Talangan Program": {
+          "questions": {
+            "What is the Dana Talangan Program?": {
+              "answer": "It is an advance fund program to help employees in urgent financial need."
+            },
+            "How is the debt settlement process carried out?": {
+              "answer": "Clients are expected to come to the FLIN office to pay the success fee and follow the debt payment procedures for all related creditors."
+            }
+          }
+        }
+      }
+    },
+    "BahasaIndonesia": {
+      "topics": {
+        "Tentang FLIN": {
+          "questions": {
+            "Apakah FLIN aman dan terpercaya?": {
+              "answer": "Ya, Program Dana Talangan aman. FLIN bekerja sama dengan lembaga keuangan terpercaya yang terdaftar dan diawasi oleh Otoritas Jasa Keuangan (OJK) di Indonesia, sehingga memastikan proses yang aman dan transparan."
+            },
+            "Apa itu FLIN?": {
+              "answer": "FLIN adalah platform terbaru yang menawarkan solusi manajemen utang, khususnya konsolidasi, restrukturisasi, dan pendanaan pelunasan utang melalui Program Dana Talangan. Melalui platform ini, kami berharap untuk dapat membantu peminjam yang mengalami tantangan untuk melunasi pinjaman atau terjebak hutang agar mereka bisa mendapatkan kembali kendali atas kondisi keuangan mereka."
+            }
+          }
+        },
+        "Program Dana Talangan": {
+          "questions": {
+            "Apa itu Program Dana Talangan?": {
+              "answer": "Program Dana Talangan adalah layanan konsolidasi utang yang meringankan beban finansial dengan menggabungkan beberapa utang, sehingga Anda hanya perlu membayar satu cicilan tetap dan satu bunga setiap bulannya. Setelah itu dana talangan akan disalurkan langsung ke berbagai debitur dan/atau bank terkait untuk melunasi semua utang Anda."
+            },
+            "Bagaimana proses penyelesaian utang dilakukan?": {
+              "answer": "Klien diharapkan datang ke kantor FLIN untuk membayar success fee sekaligus mengikuti prosedur pembayaran utang ke seluruh debitur terkait."
+            }
+          }
+        }
+      }
+    }
+  }
+}
