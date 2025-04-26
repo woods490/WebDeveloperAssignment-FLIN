@@ -1,0 +1,20 @@
+{
+  "name": "part-3-api-integration-deployment",
+  "version": "1.0.0",
+  "description": "simple api for forms and get form data",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "leads",
+    "api"
+  ],
+  "author": "aga",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "pg": "^8.14.1"
+  }
+}
