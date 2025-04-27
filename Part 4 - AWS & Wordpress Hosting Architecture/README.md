@@ -1,5 +1,7 @@
 # System Architecture Explanation
 
+The architecture for the WordPress site is presented [here](https://github.com/woods490/WebDeveloperAssignment-FLIN/blob/main/Part%204%20-%20AWS%20%26%20Wordpress%20Hosting%20Architecture/AWS%20WordPress%20Architecture.pdf)
+
 ## 1. Auto Scaling Group for WordPress Instances Running on EC2 with cPanel
 
 ![AutoScaleGroupAWS](./AutoScaleGroupAWS.png)
