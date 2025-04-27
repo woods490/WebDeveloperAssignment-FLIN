@@ -4,8 +4,6 @@ import path from 'path';
 const tmpDbPath = '/tmp/db.json';
 const tmpDirPath = path.dirname(tmpDbPath); 
 
-console.log(tmpDirPath);
-
 async function ensureTmpDB() {
     if (!fs.existsSync(tmpDirPath)) {
         fs.mkdirSync(tmpDirPath, { recursive: true });
