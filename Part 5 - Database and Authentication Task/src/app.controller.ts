@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, InternalServerErrorException, NotFoundException, Post, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, InternalServerErrorException, NotFoundException, Post, Query, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { AppService } from './app.service';
 import { DatabaseService } from './database/database.service';
 import { JwtAuthGuard } from './guards/jwt.guard';
@@ -72,17 +72,20 @@ export class AppController {
 
   @Get('profile')
   @UseGuards(JwtAuthGuard)
-  async getUser(@Body() body) {
+  async getUser(@Query() query) {
     try {
-      if (typeof body.username !== 'string') {
-        throw new Error('Validasi gagal: username harus string!');
+      const { username } = query;
+
+      const isValidUsername = /^[a-zA-Z]+$/.test(username);
+      if (!isValidUsername) {
+        throw new Error('Validasi gagal: username hanya boleh huruf (a-z, A-Z)!');
       }
 
-      const data = await this.databaseService.query("SELECT * FROM users WHERE username = $1", [body.username]);
+      const data = await this.databaseService.query("SELECT * FROM users WHERE username = $1", [username]);
 
-      if (data.rows[0].length == 0) {
+      if (data.rows.length === 0) {
         throw new NotFoundException('Username tidak ditemukan');
-      }
+      }      
 
       return {
         status: HttpStatus.OK,
