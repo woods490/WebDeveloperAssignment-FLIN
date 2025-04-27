@@ -1,0 +1,20 @@
+{
+    "leads": [
+        
+    ],
+    "loan_type": [
+        {
+            "id": 1,
+            "type_name": "Home Loan"
+        },
+        {
+            "id": 2,
+            "type_name": "Education Loan"
+        },
+        {
+            "id": 3,
+            "type_name": "Business Loan"
+        }
+    ]
+}
+  

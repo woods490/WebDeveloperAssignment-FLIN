@@ -32,12 +32,16 @@ app.post('/leads', async (req, res) => {
             return res.status(400).json({ error: 'Tipe pinjaman harus diisi!' });
         }
 
-        const result = await db.query(
-            'INSERT INTO leads (name, phone_number, email, loan_id) VALUES ($1, $2, $3, $4) RETURNING *', 
-            [name, phone_number, email, loan_id]
-        );      
+        const lead = {
+            name: name,
+            phone_number: phone_number,
+            email: email,
+            loan_id: loan_id
+        };
 
-        res.status(201).json({ status: 201, message: 'Data berhasil disimpan!', data: result.rows[0] });
+        const result = await db.addLeads(lead);
+
+        res.status(201).json({ status: 201, message: 'Data berhasil disimpan!', data: result });
     } catch (error) {
         console.error('Error menambah data:', error);
         res.status(500).send('Internal Server Error');
@@ -49,10 +53,10 @@ app.get('/leads', async (req, res) => {
         const { passkey } = req.query;
 
         if (passkey !== process.env.PASSKEY) {
-            res.status(403).send('Passkey salah!');
+            return res.status(403).send('Passkey salah!');
         }
 
-        const result = await db.query('SELECT * FROM leads');
+        const result = await db.getLeads();
 
         const loanTypeMap = {
             1: 'Home',
@@ -73,7 +77,7 @@ app.get('/leads', async (req, res) => {
                 <tbody>
         `;
 
-        result.rows.forEach(row => {
+        result.forEach(row => {
             const loanType = loanTypeMap[row.loan_id] || 'Unknown';
             tableHTML += `
                 <tr>
@@ -99,11 +103,4 @@ app.get('/leads', async (req, res) => {
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
-});
-
-process.on('SIGINT', async () => {
-    console.log('\Close connection down...');
-    await db.end(); 
-    console.log('Database pool has ended');
-    process.exit(0);
 });
