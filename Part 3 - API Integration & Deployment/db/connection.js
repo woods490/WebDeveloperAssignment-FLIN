@@ -1,9 +1,10 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
-const originalDbPath = path.join(__dirname, 'db.json');
 const tmpDbPath = '/tmp/db.json';
-const tmpDirPath = path.dirname(tmpDbPath);
+const tmpDirPath = path.dirname(tmpDbPath); 
+
+console.log(tmpDirPath);
 
 async function ensureTmpDB() {
     if (!fs.existsSync(tmpDirPath)) {
@@ -11,12 +12,8 @@ async function ensureTmpDB() {
     }
 
     if (!fs.existsSync(tmpDbPath)) {
-        if (fs.existsSync(originalDbPath)) {
-            fs.copyFileSync(originalDbPath, tmpDbPath);
-        } else {
-            const emptyDb = { leads: [], loan_type: [] };
-            fs.writeFileSync(tmpDbPath, JSON.stringify(emptyDb, null, 2), 'utf-8'); // Write empty DB to tmp
-        }
+        const emptyDb = { leads: [], loan_type: [] };
+        fs.writeFileSync(tmpDbPath, JSON.stringify(emptyDb, null, 2), 'utf-8');
     }
 }
 
@@ -27,7 +24,7 @@ async function readDB() {
 }
 
 async function writeDB(data) {
-    await ensureTmpDB(); 
+    await ensureTmpDB();
     fs.writeFileSync(tmpDbPath, JSON.stringify(data, null, 2), 'utf-8');
 }
 
@@ -59,7 +56,4 @@ async function addLeads(lead) {
     await writeDB(db); 
 }
 
-module.exports = {
-    getLeads,
-    addLeads,
-};
+export default { getLeads, addLeads };
