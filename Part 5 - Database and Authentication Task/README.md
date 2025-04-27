@@ -60,4 +60,4 @@ After installing, don't forget to create environment file named .env.development
 $ npm run start:dev
 ```
 
-Finally, feel free to test the application API with Postman or any other API testing application of your choice. I've provided the API documentation as a link and JSON (Postman collection) in the github repo
+Finally, feel free to test the application API with Postman or any other API testing application of your choice. I've provided the API documentation as a [link](https://documenter.getpostman.com/view/37098805/2sB2j1gXVH) and JSON (Postman collection) in the github repo
