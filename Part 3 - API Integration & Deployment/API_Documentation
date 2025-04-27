@@ -1,0 +1,280 @@
+{
+	"info": {
+		"_postman_id": "92e78849-d1c8-4a03-a87f-046221c9725c",
+		"name": "Part 3 - API Integration & Deployment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "37098805"
+	},
+	"item": [
+		{
+			"name": "Leads",
+			"item": [
+				{
+					"name": "Index page",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1:3000/index",
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Index page HTML",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "http://127.0.0.1:3000/index"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "html",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Accept-Ranges",
+									"value": "bytes"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "public, max-age=0"
+								},
+								{
+									"key": "Last-Modified",
+									"value": "Sun, 27 Apr 2025 13:23:58 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1ea1-196776b3c39\""
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/html; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "7841"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 27 Apr 2025 13:43:55 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "<!DOCTYPE html>\n<html lang=\"en\">\n    <head>\n        <meta charset=\"UTF-8\">\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n        <title>Leads Form</title>\n        <link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css\" integrity=\"sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N\" crossorigin=\"anonymous\">\n        <script src=\"https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js\"></script>\n        <script src=\"https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js\" integrity=\"sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj\" crossorigin=\"anonymous\"></script>\n        <script src=\"https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js\" integrity=\"sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN\" crossorigin=\"anonymous\"></script>\n        <script src=\"https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js\" integrity=\"sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+\" crossorigin=\"anonymous\"></script>\n        <script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script>\n    </head>\n    <body>\n        <div class=\"d-flex justify-content-center align-items-center vh-100\">\n            <div class=\"card\" style=\"width: 700px\">\n                <div class=\"card-body\">\n                    <div class=\"row\">\n                        <div class=\"col-md-4\">\n                            <ul class=\"nav nav-pills flex-column\" id=\"nav-pills\">\n                                <li class=\"nav-item\">\n                                    <a class=\"nav-link active\" href=\"#\" id=\"post-pill\">POST</a>\n                                </li>\n                                <li class=\"nav-item\">\n                                    <a class=\"nav-link\" href=\"#\" id=\"get-pill\">GET</a>\n                                </li>\n                            </ul>\n                        </div>\n                        <div class=\"col-md-8\">\n                            <form id=\"post-leads\">\n                                <div class=\"form-group\">\n                                    <label>Name</label>\n                                    <input type=\"text\" class=\"form-control\" name=\"name\">\r\n                            \n                                </div>\n                                <div class=\"form-group\">\n                                    <label>Phone Number</label>\n                                    <input type=\"tel\" class=\"form-control\" name=\"phone_number\">\r\n                            \n                                </div>\n                                <div class=\"form-group\">\n                                    <label>Email</label>\n                                    <input type=\"email\" class=\"form-control\" name=\"email\">\r\n                            \n                                </div>\n                                <div class=\"form-group\">\n                                    <label>Tipe Pinjaman (Loan Type)</label>\n                                    <select class=\"form-control\" id=\"loanType\" name=\"loan_id\">\n                                        <option value=\"1\">Home</option>\n                                        <option value=\"2\">Education</option>\n                                        <option value=\"3\">Business</option>\n                                    </select>\n                                </div>\n                                <button type=\"submit\" class=\"btn btn-primary\">Submit</button>\n                            </form>\n                            <form id=\"get-leads\" style=\"display:none;\">\n                                <div class=\"form-group\">\n                                    <label>Passkey</label>\n                                    <input type=\"text\" name=\"passkey\">\r\n                            \n                                </div>\n                                <button type=\"submit\" class=\"btn btn-primary\">Submit</button>\n                            </form>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n        <script>\r\n        document.addEventListener('DOMContentLoaded', function () {\r\n            const form = document.querySelector('#post-leads');\r\n\r\n            form.addEventListener('submit', async function (e) {\r\n                e.preventDefault(); \r\n\r\n                const formData = {\r\n                    name: form.name.value,\r\n                    phone_number: form.phone_number.value,\r\n                    email: form.email.value,\r\n                    loan_id: form.loan_id.value,\r\n                };\r\n\r\n                try {\r\n                    const response = await axios.post('/leads', formData, {\r\n                        headers: {\r\n                            'Content-Type': 'application/json'\r\n                        }\r\n                    });\r\n                    Swal.fire({\r\n                        icon: 'success',\r\n                        title: 'Berhasil!',\r\n                        text: 'Data berhasil dikirim!',\r\n                    });\r\n\r\n                    form.reset();\r\n                } catch (error) {\r\n                    Swal.fire({\r\n                        icon: 'error',\r\n                        title: 'Gagal!',\r\n                        text: error.response?.data?.error || 'Terjadi kesalahan saat mengirim data.',\r\n                    });\r\n                }\r\n            });\r\n\r\n            const formGet = document.querySelector(\"#get-leads\")\r\n\r\n            formGet.addEventListener('submit', async function (e) {\r\n                e.preventDefault(); \r\n\r\n                const formData = {\r\n                    passkey: formGet.passkey.value,\r\n                };\r\n\r\n                try {\r\n                    const response = await axios.get('/leads', {\r\n                        params: formData,\r\n                        headers: {\r\n                            'Content-Type': 'application/json'\r\n                        }\r\n                    });\r\n\r\n                    formGet.style.display = 'none';\r\n\r\n                    const tableContainer = document.createElement('div');\r\n                    tableContainer.id = 'data-leads';\r\n                    tableContainer.innerHTML = response.data;\r\n                    formGet.parentNode.insertBefore(tableContainer, form.nextSibling);\r\n                } catch (error) {\r\n                    Swal.fire({\r\n                        icon: 'error',\r\n                        title: 'Gagal!',\r\n                        text: error.response?.data || 'Terjadi kesalahan saat mengirim data.',\r\n                    });\r\n                }\r\n            });\r\n\r\n            const postPill = document.getElementById('post-pill');\r\n            const getPill = document.getElementById('get-pill');\r\n            const postForm = document.getElementById('post-leads');\r\n            const getForm = document.getElementById('get-leads');\r\n\r\n            function switchPills(activePill) {\r\n                postPill.classList.remove('active');\r\n                getPill.classList.remove('active');\r\n                \r\n                const leadsTable = document.getElementById('data-leads');\r\n\r\n                if (leadsTable) {\r\n                    leadsTable.remove();\r\n                }\r\n                \r\n                activePill.classList.add('active');\r\n                \r\n                if (activePill.id === 'post-pill') {\r\n                    postForm.style.display = 'block';\r\n                    getForm.style.display = 'none';\r\n                } else {\r\n                    postForm.style.display = 'none';\r\n                    getForm.style.display = 'block';\r\n                }\r\n            }\r\n\r\n            postPill.addEventListener('click', function(event) {\r\n                event.preventDefault();\r\n                switchPills(postPill);\r\n            });\r\n\r\n            getPill.addEventListener('click', function(event) {\r\n                event.preventDefault();\r\n                switchPills(getPill);\r\n            });\r\n\r\n            switchPills(postPill);\r\n        });\r\n    </script>\n    </body>\n</html>"
+						}
+					]
+				},
+				{
+					"name": "GET leads",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3000/leads?passkey=get-leads",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"leads"
+							],
+							"query": [
+								{
+									"key": "passkey",
+									"value": "get-leads"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "GET leads",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:3000/leads?passkey=get-leads",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3000",
+									"path": [
+										"leads"
+									],
+									"query": [
+										{
+											"key": "passkey",
+											"value": "get-leads"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "html",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/html; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1040"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"410-zj7LC3XwatXZazT4EI9AYV7XyKQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 27 Apr 2025 13:59:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "            \n<table border=\"1\" cellpadding=\"5\" cellspacing=\"0\">\n    <thead>\n        <tr>\n            <th>Name</th>\n            <th>Phone Number</th>\n            <th>Email</th>\n            <th>Loan Type</th>\n        </tr>\n    </thead>\n    <tbody>\n        <tr>\n            <td>aga</td>\n            <td>08533476666</td>\n            <td>aga@mail.com</td>\n            <td>Home</td>\n        </tr>\n        <tr>\n            <td>aga</td>\n            <td>08533476666</td>\n            <td>aga@mail.com</td>\n            <td>Home</td>\n        </tr>\n        <tr>\n            <td>aga</td>\n            <td>08533476666</td>\n            <td>aga@mail.com</td>\n            <td>Education</td>\n        </tr>\n    </tbody>\n</table>"
+						}
+					]
+				},
+				{
+					"name": "POST leads",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": "http://127.0.0.1:3000/leads"
+					},
+					"response": [
+						{
+							"name": "POST leads",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"aga\",\r\n    \"email\": \"aga@mail.com\",\r\n    \"phone_number\": \"08533476666\",\r\n    \"loan_id\": 2 \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://127.0.0.1:3000/leads"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "50"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"32-4wP/KJPcjTCSAxGcy9oyyeFqThE\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 27 Apr 2025 13:57:44 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 201,\n    \"message\": \"Data berhasil disimpan!\"\n}"
+						}
+					]
+				}
+			],
+			"description": "The `/me` endpoints let you manage information about the authenticated user."
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": {
+			"key": "X-API-Key",
+			"value": "{{token}}"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://farming-simulator.pstmn.io"
+		}
+	]
+}
